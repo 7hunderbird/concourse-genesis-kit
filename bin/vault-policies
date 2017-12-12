@@ -8,11 +8,11 @@ reset-concourse-credentials() {
 	echo "Generating new secret-id for $role, and saving it to Vault"
 
 	# Set role-id
-	safe paste secret/concourse/$role role_id<<EOF
+	safe paste secret/concourse-ci/$role/vault role_id<<EOF
 $(safe read auth/approle/role/$role/role-id | spruce json | jq -r .role_id)
 EOF
 	# get a new secret-id + save it
-	safe paste secret/concourse/$role secret_id <<EOF
+	safe paste secret/concourse-ci/$role/vault secret_id <<EOF
 $(safe vault write -f -format=json auth/approle/role/$role/secret-id | jq -r '.data.secret_id')
 EOF
 }
