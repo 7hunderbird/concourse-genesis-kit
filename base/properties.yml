@@ -91,7 +91,7 @@ instance_groups:
           ssl_key: (( vault meta.vault "/locker/server:key" ))
 
   - name: worker
-    instances: 3
+    instances: (( grab params.worker_count ))
     azs: (( grab params.availability_zones ))
     stemcell: default
     vm_type: (( grab params.concourse_vm_type ))
@@ -104,6 +104,7 @@ instance_groups:
       - release: concourse
         name: groundcrew
         properties:
+          tags: (( grab params.worker_tags ))
           tsa:
             worker_key:
               private_key: (( vault meta.vault "/tsa/worker_key:private" ))

@@ -2,6 +2,7 @@
 params:
   external_domain:   (( param "Please specify the IP/DNS users will use to connect to Concourse" ))
   num_web_nodes:     1
+  worker_count:      3
   external_url:      (( concat "https://" params.external_domain ))
   concourse_network: concourse
   concourse_vm_type: small
